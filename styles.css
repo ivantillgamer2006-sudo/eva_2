@@ -1,6 +1,428 @@
-/* ========== NUEVOS ESTILOS PARA EVA 2 ========== */
+/* ========== VARIABLES SCENE / MYSPACE ========== */
+:root {
+    --black: #000000;
+    --white: #ffffff;
+    --hot-pink: #ff1493;
+    --soft-pink: #ff69b4;
+    --dark-pink: #c71585;
+    --gray-dark: #1a1a1a;
+    --gray-light: #2c2c2c;
+    --glow-pink: rgba(255, 20, 147, 0.6);
+    --border-grunge: #330000;
+    --font-8bit: 'Press Start 2P', monospace;
+    --font-scene: 'Orbitron', 'VT323', monospace;
+}
 
-/* Formulario de agregar productos */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    background-color: var(--black);
+    font-family: var(--font-scene);
+    color: var(--white);
+}
+
+.myspace-bg {
+    background: radial-gradient(circle at 10% 20%, rgba(255,20,147,0.15), black 80%);
+    min-height: 100vh;
+}
+
+/* ========== HEADER ESTILO MYSPACE ========== */
+.profile-header {
+    background: rgba(0,0,0,0.85);
+    border-bottom: 3px solid var(--hot-pink);
+    padding: 1rem 5%;
+    box-shadow: 0 0 20px var(--glow-pink);
+}
+
+.profile-top {
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-bottom: 1.5rem;
+}
+
+.profile-pic-container {
+    position: relative;
+    width: 130px;
+    height: 130px;
+    border: 4px solid var(--hot-pink);
+    border-radius: 20px;
+    overflow: hidden;
+    box-shadow: 0 0 15px var(--hot-pink);
+}
+
+.profile-pic {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.glitter-overlay {
+    position: absolute;
+    top:0;
+    left:0;
+    width:100%;
+    height:100%;
+    background: repeating-linear-gradient(45deg, rgba(255,255,255,0.2) 0px, rgba(255,255,255,0.2) 2px, transparent 2px, transparent 8px);
+    pointer-events: none;
+}
+
+.scene-title {
+    font-family: var(--font-8bit);
+    font-size: 1.7rem;
+    color: var(--hot-pink);
+    text-shadow: 3px 3px 0px var(--white), 0 0 10px magenta;
+    letter-spacing: 2px;
+}
+
+.status, .mood {
+    font-size: 0.85rem;
+    background: var(--gray-dark);
+    display: inline-block;
+    padding: 0.3rem 0.8rem;
+    margin: 5px 5px 0 0;
+    border-radius: 30px;
+}
+
+.glitter-text {
+    animation: glitter 1.5s infinite;
+    font-weight: bold;
+}
+
+.top-friends {
+    margin-top: 10px;
+    background: var(--black);
+    padding: 5px 10px;
+    border: 1px solid pink;
+}
+
+/* ========== NAVEGACIÓN ========== */
+.myspace-nav ul {
+    display: flex;
+    gap: 2rem;
+    list-style: none;
+    flex-wrap: wrap;
+    justify-content: center;
+    border-top: 1px dashed var(--hot-pink);
+    padding-top: 1rem;
+}
+
+.myspace-nav a {
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+    padding: 5px 12px;
+    transition: all 0.2s;
+    border-radius: 30px;
+}
+
+.myspace-nav a:hover {
+    background: var(--hot-pink);
+    color: black;
+    text-shadow: none;
+    box-shadow: 0 0 12px pink;
+    transform: scale(1.05);
+}
+
+/* ========== REPRODUCTOR DE MÚSICA ========== */
+.myspace-music-player {
+    background: linear-gradient(135deg, #1a1a1a, #0d0d0d);
+    border: 2px solid var(--hot-pink);
+    border-radius: 15px;
+    margin: 15px auto;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 0 15px rgba(255,20,147,0.5);
+    font-family: var(--font-8bit);
+}
+
+.player-header {
+    background: var(--hot-pink);
+    color: black;
+    padding: 8px 12px;
+    font-size: 0.7rem;
+    font-weight: bold;
+    display: flex;
+    justify-content: space-between;
+    border-radius: 12px 12px 0 0;
+}
+
+.player-content {
+    padding: 15px;
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    flex-wrap: wrap;
+}
+
+.album-art-mini {
+    width: 50px;
+    height: 50px;
+    background: radial-gradient(circle, var(--hot-pink), black);
+    border-radius: 10px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2rem;
+}
+
+.track-info {
+    flex-grow: 1;
+}
+
+.track-name {
+    font-size: 0.8rem;
+    color: var(--hot-pink);
+    font-weight: bold;
+}
+
+.track-artist {
+    font-size: 0.6rem;
+    color: #ccc;
+}
+
+.player-buttons {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+    flex-wrap: wrap;
+    width: 100%;
+}
+
+.music-btn {
+    background: var(--hot-pink);
+    border: none;
+    padding: 5px 12px;
+    border-radius: 20px;
+    cursor: pointer;
+    font-family: var(--font-8bit);
+    font-size: 0.7rem;
+    transition: all 0.2s;
+}
+
+.music-btn:hover {
+    background: white;
+    transform: scale(1.05);
+}
+
+#volumeSlider {
+    width: 100px;
+    height: 4px;
+    background: var(--hot-pink);
+    border-radius: 5px;
+}
+
+.player-footer marquee {
+    font-size: 0.6rem;
+    color: var(--hot-pink);
+    padding: 5px;
+    background: black;
+    border-radius: 0 0 12px 12px;
+}
+
+/* ========== HERO ========== */
+.hero-scene {
+    background: linear-gradient(135deg, rgba(0,0,0,0.7), rgba(255,20,147,0.3));
+    background-size: cover;
+    background-position: center;
+    min-height: 60vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    border-bottom: 3px solid var(--hot-pink);
+    margin-bottom: 2rem;
+}
+
+.hero-content {
+    background: rgba(0,0,0,0.75);
+    padding: 2rem;
+    border-radius: 50px;
+    backdrop-filter: blur(6px);
+    border: 1px solid var(--hot-pink);
+}
+
+.blinkie-text {
+    font-family: var(--font-8bit);
+    font-size: 1.3rem;
+    color: var(--hot-pink);
+    animation: blink 1s step-start infinite;
+    margin-bottom: 1rem;
+}
+
+@keyframes blink {
+    50% { opacity: 0; text-shadow: 0 0 5px white;}
+}
+
+.hero-sub {
+    font-size: 1.2rem;
+    letter-spacing: 2px;
+}
+
+.btn-scene {
+    display: inline-block;
+    background: var(--hot-pink);
+    color: black;
+    font-weight: bold;
+    padding: 12px 25px;
+    text-decoration: none;
+    border-radius: 40px;
+    margin: 1rem 0;
+    transition: all 0.3s;
+    font-family: var(--font-8bit);
+    font-size: 0.7rem;
+}
+
+.btn-scene:hover {
+    background: white;
+    color: var(--hot-pink);
+    box-shadow: 0 0 20px magenta;
+    transform: skew(-5deg);
+}
+
+/* ========== BLINKIES ========== */
+.blinkies-bar {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    flex-wrap: wrap;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.blinkie-gif {
+    height: 31px;
+    width: auto;
+}
+
+.blinkie-text-small {
+    background: black;
+    padding: 4px 8px;
+    font-size: 0.7rem;
+    animation: blink 1.2s step-start infinite;
+    font-family: var(--font-8bit);
+    border: 1px solid hotpink;
+}
+
+/* ========== PRODUCTOS GRID ========== */
+.products-scene {
+    padding: 2rem 5%;
+}
+
+.section-title-scene {
+    text-align: center;
+    font-family: var(--font-8bit);
+    font-size: 1.5rem;
+    color: var(--hot-pink);
+    margin-bottom: 2rem;
+    text-shadow: 2px 2px 0 white;
+}
+
+.products-grid-scene {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+}
+
+.product-card-scene {
+    background: var(--gray-dark);
+    border: 2px solid var(--hot-pink);
+    border-radius: 25px;
+    overflow: hidden;
+    transition: all 0.25s ease;
+    box-shadow: 5px 5px 0px var(--dark-pink);
+}
+
+.product-card-scene:hover {
+    transform: translateY(-8px);
+    box-shadow: 8px 12px 0px var(--hot-pink);
+    border-color: white;
+}
+
+.product-image-scene {
+    position: relative;
+    overflow: hidden;
+    aspect-ratio: 1/1;
+    background: #2a0a1a;
+}
+
+.product-image-scene img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.4s;
+}
+
+.product-card-scene:hover .product-image-scene img {
+    transform: scale(1.1);
+}
+
+.hover-glow {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255,20,147,0.4), transparent);
+    opacity: 0;
+    transition: opacity 0.3s;
+    pointer-events: none;
+}
+
+.product-card-scene:hover .hover-glow {
+    opacity: 1;
+}
+
+.product-info-scene {
+    padding: 1.2rem;
+    text-align: center;
+}
+
+.product-info-scene h3 {
+    font-size: 1.4rem;
+    color: var(--hot-pink);
+}
+
+.desc-scene {
+    font-size: 0.8rem;
+    color: #ccc;
+    margin: 8px 0;
+}
+
+.price-scene {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin: 10px 0;
+    background: black;
+    display: inline-block;
+    padding: 4px 12px;
+    border-radius: 20px;
+}
+
+.btn-buy-scene {
+    background: var(--hot-pink);
+    border: none;
+    padding: 10px;
+    width: 100%;
+    font-family: var(--font-8bit);
+    font-weight: bold;
+    border-radius: 30px;
+    cursor: pointer;
+    transition: 0.2s;
+}
+
+.btn-buy-scene:hover {
+    background: white;
+    color: black;
+    letter-spacing: 2px;
+}
+
+/* ========== FORMULARIO (EVA 2) ========== */
 .form-section {
     padding: 2rem 5%;
     background: rgba(0,0,0,0.5);
@@ -26,7 +448,7 @@
     min-height: 20px;
 }
 
-/* Sección del carrito */
+/* ========== CARRITO (EVA 2) ========== */
 .cart-section {
     padding: 2rem 5%;
     background: rgba(0,0,0,0.3);
@@ -38,6 +460,7 @@
     padding: 1.5rem;
     border: 1px solid var(--hot-pink);
     margin-bottom: 1.5rem;
+    min-height: 200px;
 }
 
 .cart-item {
@@ -137,18 +560,7 @@
     font-size: 1.5rem;
 }
 
-/* Animación para cuando se agrega al carrito */
-@keyframes cartPulse {
-    0% { transform: scale(1); }
-    50% { transform: scale(1.05); background: var(--hot-pink); color: black; }
-    100% { transform: scale(1); }
-}
-
-.cart-pulse {
-    animation: cartPulse 0.3s ease;
-}
-
-/* Badge del carrito flotante */
+/* ========== BADGE FLOTANTE CARRITO ========== */
 .floating-cart-badge {
     position: fixed;
     bottom: 20px;
@@ -169,4 +581,206 @@
     transform: scale(1.05);
     background: white;
     color: black;
+}
+
+/* ========== CONTACTO ========== */
+.contact-scene {
+    background: rgba(0,0,0,0.7);
+    margin-top: 3rem;
+    padding: 3rem 5%;
+    border-top: 2px dotted var(--hot-pink);
+}
+
+.contact-grid-scene {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.myspace-badge {
+    background: var(--hot-pink);
+    color: black;
+    padding: 8px;
+    text-align: center;
+    font-weight: bold;
+    margin-bottom: 1rem;
+}
+
+.contact-info-scene p {
+    margin: 0.8rem 0;
+}
+
+.social-scene a {
+    display: inline-block;
+    background: #333;
+    padding: 6px 12px;
+    margin: 5px;
+    text-decoration: none;
+    color: var(--hot-pink);
+    border-radius: 20px;
+}
+
+.social-scene a:hover {
+    background: var(--hot-pink);
+    color: black;
+}
+
+.blinkie-corner {
+    margin-top: 20px;
+}
+
+.blinkie {
+    display: inline-block;
+    background: black;
+    padding: 5px;
+    font-size: 0.7rem;
+    animation: blink 0.8s step-start infinite;
+    border: 1px solid magenta;
+    margin: 3px;
+}
+
+.contact-form-scene {
+    background: #111;
+    padding: 1.5rem;
+    border-radius: 30px;
+}
+
+.form-group-scene {
+    margin-bottom: 1rem;
+}
+
+.form-group-scene label {
+    display: block;
+    margin-bottom: 0.5rem;
+    color: var(--hot-pink);
+}
+
+.form-group-scene input, .form-group-scene textarea {
+    width: 100%;
+    background: black;
+    border: 1px solid var(--hot-pink);
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+}
+
+.btn-submit-scene {
+    background: var(--hot-pink);
+    width: 100%;
+    padding: 12px;
+    font-family: var(--font-8bit);
+    border: none;
+    border-radius: 30px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
+.note-scene {
+    font-size: 0.6rem;
+    text-align: center;
+    margin-top: 10px;
+    color: #888;
+}
+
+/* ========== COMENTARIOS ========== */
+.comments-section {
+    padding: 2rem 5%;
+    background: #0a0a0a;
+}
+
+.comments-title {
+    color: var(--hot-pink);
+    text-align: center;
+    font-family: var(--font-8bit);
+}
+
+.comment-box p {
+    background: #1e1e1e;
+    margin: 10px 0;
+    padding: 10px;
+    border-left: 5px solid var(--hot-pink);
+}
+
+/* ========== BOTÓN MÚSICA FLOTANTE ========== */
+.activate-music-btn {
+    position: fixed;
+    bottom: 20px;
+    left: 20px;
+    background: var(--hot-pink);
+    color: black;
+    padding: 12px 24px;
+    border-radius: 50px;
+    font-family: var(--font-8bit);
+    font-size: 0.7rem;
+    cursor: pointer;
+    z-index: 1000;
+    animation: blink 1s infinite;
+    border: 2px solid white;
+    box-shadow: 0 0 10px magenta;
+}
+
+.activate-music-btn:hover {
+    transform: scale(1.05);
+    background: white;
+    color: black;
+}
+
+/* ========== FOOTER ========== */
+.footer-scene {
+    background: black;
+    text-align: center;
+    padding: 1.5rem;
+    border-top: 2px solid var(--hot-pink);
+    font-size: 0.8rem;
+}
+
+.hit-counter {
+    font-family: var(--font-8bit);
+    color: lime;
+    margin: 5px 0;
+}
+
+/* ========== ANIMACIONES ========== */
+@keyframes glitter {
+    0% { text-shadow: 0 0 2px white; }
+    50% { text-shadow: 0 0 12px magenta; }
+    100% { text-shadow: 0 0 2px white; }
+}
+
+@keyframes cartPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); background: var(--hot-pink); color: black; }
+    100% { transform: scale(1); }
+}
+
+.cart-pulse {
+    animation: cartPulse 0.3s ease;
+}
+
+/* ========== RESPONSIVE ========== */
+@media (max-width: 800px) {
+    .contact-grid-scene {
+        grid-template-columns: 1fr;
+    }
+    .profile-top {
+        justify-content: center;
+        text-align: center;
+    }
+    .scene-title {
+        font-size: 1rem;
+    }
+    .hero-content {
+        margin: 1rem;
+        padding: 1rem;
+    }
+    .blinkie-text {
+        font-size: 0.9rem;
+    }
+    .cart-item {
+        flex-direction: column;
+        text-align: center;
+    }
+    .cart-item-subtotal {
+        text-align: center;
+    }
 }
