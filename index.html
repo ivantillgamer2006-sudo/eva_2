@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <meta name="description" content="☆ PELUCHES CORE ☆ Tu tienda de peluches emo/scene del 2000s. MySpace style, rawr XD">
+    <title>☆ PELUCHES CORE ☆ MySpace Scene Plushies</title>
+    <link rel="stylesheet" href="styles.css">
+    <!-- Fuente retro 2000s -->
+    <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
+    <!-- Font Awesome 6 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <div class="myspace-bg">
+        <!-- Header (igual que antes) -->
+        <header class="profile-header">
+            <div class="profile-top">
+                <div class="profile-pic-container">
+                    <img src="https://i.pinimg.com/originals/46/3d/9c/463d9c000ca8d48f34767c58ac7b520d.gif" alt="scene kid avatar" class="profile-pic">
+                    <div class="glitter-overlay"></div>
+                </div>
+                <div class="profile-info">
+                    <h1 class="scene-title">☆ PLUSHIES CORE ☆</h1>
+                    <p class="status"><i class="fas fa-music"></i> ♪ LISTENING: Lucky - Lucky Twice ♪</p>
+                    <p class="mood">〄 mood: <span class="glitter-text">HUGGING PLUSHIES 4EVER</span> 〄</p>
+                    <div class="top-friends">
+                        <span>★ Top 8 Buyers ★</span>
+                        <div class="friend-icons">
+                            <i class="fas fa-skull"></i>
+                            <i class="fas fa-heart-broken"></i>
+                            <i class="fas fa-paw"></i>
+                            <i class="fas fa-moon"></i>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <nav class="myspace-nav">
+                <ul>
+                    <li><a href="#"><i class="fas fa-home"></i> Inicio</a></li>
+                    <li><a href="#productos"><i class="fas fa-teddy-bear"></i> Mis Plushies</a></li>
+                    <li><a href="#carrito"><i class="fas fa-shopping-cart"></i> Carrito</a></li>
+                    <li><a href="#agregar"><i class="fas fa-plus-circle"></i> Agregar</a></li>
+                    <li><a href="#contacto"><i class="fas fa-envelope"></i> Contacto</a></li>
+                </ul>
+            </nav>
+        </header>
+
+        <!-- Reproductor de música (igual) -->
+        <div class="myspace-music-player">
+            <div class="player-header">
+                <i class="fas fa-headphones"></i> ♪ xX_MyPlaylist_Xx ♪
+                <span class="player-controls-mini"><i class="fas fa-volume-up" id="volIcon"></i></span>
+            </div>
+            <div class="player-content">
+                <div class="album-art-mini"><i class="fas fa-compact-disc"></i></div>
+                <div class="track-info">
+                    <div class="track-name">🎸 Lucky</div>
+                    <div class="track-artist">Lucky Twice</div>
+                </div>
+                <audio id="sceneAudio" loop>
+                    <source src="audio/Lucky.mp3" type="audio/mpeg">
+                </audio>
+                <div class="player-buttons">
+                    <button onclick="playMusic()" class="music-btn"><i class="fas fa-play"></i></button>
+                    <button onclick="pauseMusic()" class="music-btn"><i class="fas fa-pause"></i></button>
+                    <button onclick="stopMusic()" class="music-btn"><i class="fas fa-stop"></i></button>
+                    <input type="range" id="volumeSlider" min="0" max="100" value="50">
+                </div>
+            </div>
+            <div class="player-footer">
+                <marquee>☆ NOW PLAYING: Lucky.mp3 - MySpace emo radio ☆</marquee>
+            </div>
+        </div>
+
+        <!-- Hero section (igual) -->
+        <section class="hero-scene">
+            <div class="hero-content">
+                <h2 class="blinkie-text">✧ RAWR MEANS I LOVE YOU IN DINOSAUR ✧</h2>
+                <p class="hero-sub">★ peluches suaves para corazones emo ★</p>
+                <a href="#" class="btn-scene">☆ VER COLECCIÓN ☆</a>
+                <div class="blinkies-bar">
+                    <img src="https://blinkies.cafe/b/blinkiesCafe-Rw.gif" alt="blinkie rawr" class="blinkie-gif">
+                    <img src="https://blinkies.cafe/b/display/0123-glitterpink.gif" alt="blinkie glitter pink" class="blinkie-gif">
+                    <img src="https://blinkies.cafe/b/blinkiesCafe-hw.gif" alt="blinkie heart" class="blinkie-gif">
+                    <span class="blinkie-text-small">☠ RAWR XD ☠</span>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== NUEVA SECCIÓN: FORMULARIO PARA AGREGAR PRODUCTOS ========== -->
+        <section id="agregar" class="form-section">
+            <div class="container">
+                <h2 class="section-title-scene"><i class="fas fa-plus-circle"></i> ★ AGREGAR AL CARRITO ★ <i class="fas fa-plus-circle"></i></h2>
+                <div class="form-card">
+                    <form id="productoForm">
+                        <div class="form-group-scene">
+                            <label><i class="fas fa-tag"></i> Nombre del peluche:</label>
+                            <input type="text" id="productoNombre" placeholder="Ej: Oso Emo XD" required>
+                            <small class="error-message" id="errorNombre"></small>
+                        </div>
+                        <div class="form-group-scene">
+                            <label><i class="fas fa-dollar-sign"></i> Precio (CLP):</label>
+                            <input type="number" id="productoPrecio" placeholder="19990" step="1" required>
+                            <small class="error-message" id="errorPrecio"></small>
+                        </div>
+                        <div class="form-group-scene">
+                            <label><i class="fas fa-hashtag"></i> Cantidad:</label>
+                            <input type="number" id="productoCantidad" placeholder="1" value="1" min="1" required>
+                            <small class="error-message" id="errorCantidad"></small>
+                        </div>
+                        <div class="form-group-scene">
+                            <label><i class="fas fa-palette"></i> Color/Variante:</label>
+                            <select id="productoColor">
+                                <option value="negro">🖤 Negro Emo</option>
+                                <option value="rosado">💗 Rosado Glitter</option>
+                                <option value="morado">💜 Morado Gothic</option>
+                                <option value="blanco">🤍 Blanco Scene</option>
+                            </select>
+                        </div>
+                        <button type="submit" class="btn-submit-scene"><i class="fas fa-cart-plus"></i> AGREGAR AL CARRITO</button>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <!-- ========== NUEVA SECCIÓN: CARRITO DE COMPRAS ========== -->
+        <section id="carrito" class="cart-section">
+            <div class="container">
+                <h2 class="section-title-scene"><i class="fas fa-shopping-cart"></i> ★ MI CARRITO EMO ★ <i class="fas fa-shopping-cart"></i></h2>
+                <div id="cartContainer" class="cart-container">
+                    <!-- El carrito se renderiza dinámicamente acá -->
+                    <div class="cart-empty">
+                        <i class="fas fa-heart-broken"></i> El carrito está vacío... agreguemos peluches <i class="fas fa-heart-broken"></i>
+                    </div>
+                </div>
+                <div class="cart-total">
+                    <h3>TOTAL: <span id="totalCarrito">$0</span></h3>
+                    <button id="vaciarCarritoBtn" class="btn-scene" style="background:#c71585;"><i class="fas fa-trash-alt"></i> VACIAR CARRITO</button>
+                </div>
+            </div>
+        </section>
+
+        <!-- Sección de productos existente (catálogo) -->
+        <section id="productos" class="products-scene">
+            <div class="container">
+                <h2 class="section-title-scene"><i class="fas fa-star"></i> ★ MIS PLUSHIES ★ <i class="fas fa-star"></i></h2>
+                <div class="products-grid-scene" id="catalogoProductos">
+                    <!-- Los productos del catálogo se generan desde JS para mantener consistencia -->
+                </div>
+            </div>
+        </section>
+
+        <!-- Contacto (igual) -->
+        <section id="contacto" class="contact-scene">
+            <div class="container">
+                <h2 class="section-title-scene"><i class="fas fa-envelope"></i> ✉ DÉJAME UN MENSAJE ✉ <i class="fas fa-envelope"></i></h2>
+                <div class="contact-grid-scene">
+                    <div class="contact-info-scene">
+                        <div class="myspace-badge"><i class="fas fa-skull"></i> <strong>★ Info Scene ★</strong> <i class="fas fa-heart"></i></div>
+                        <p><i class="fas fa-map-marker-alt"></i> MySpace, Ciudad Emo, 2006</p>
+                        <p><i class="fas fa-phone-alt"></i> 1-800-RAWRTEDDY</p>
+                        <p><i class="fas fa-envelope"></i> x_peluches_core_x@myspace.com</p>
+                        <div class="social-scene">
+                            <a href="#"><i class="fab fa-myspace"></i> MySpace</a>
+                            <a href="#"><i class="fab fa-lastfm"></i> Last.fm</a>
+                            <a href="#"><i class="fab fa-deviantart"></i> dA</a>
+                        </div>
+                        <div class="blinkie-corner">
+                            <span class="blinkie">♥ UNDER CONSTRUCTION ♥</span>
+                            <span class="blinkie">★ BEST VIEWED WITH IE6 ★</span>
+                        </div>
+                    </div>
+                    <form class="contact-form-scene" action="#" method="post">
+                        <div class="form-group-scene">
+                            <label><i class="fas fa-user"></i> Nombre / Scene name:</label>
+                            <input type="text" name="name" required placeholder="Ej: xX_PlushieLover_Xx">
+                        </div>
+                        <div class="form-group-scene">
+                            <label><i class="fas fa-envelope"></i> E-mail:</label>
+                            <input type="email" name="email" required placeholder="emo_kid@hotmail.com">
+                        </div>
+                        <div class="form-group-scene">
+                            <label><i class="fas fa-comment"></i> Mensaje:</label>
+                            <textarea rows="4" placeholder="rawr! quiero un peluche..."></textarea>
+                        </div>
+                        <button type="submit" class="btn-submit-scene"><i class="fas fa-paper-plane"></i> Enviar mensaje (demo)</button>
+                        <p class="note-scene">*Enlaces no funcionales, solo para mostrar estilo MySpace 2000s*</p>
+                    </form>
+                </div>
+            </div>
+        </section>
+
+        <footer class="footer-scene">
+            <div class="footer-content">
+                <p>© 2006-2026 ☆ PELUCHES CORE ☆ | Hecho con <i class="fas fa-heart"></i> y mucha eyeliner</p>
+                <div class="hit-counter"><i class="fas fa-eye"></i> Visitas: 666666</div>
+                <p class="demo-note">⚠️ TODOS LOS ENLACES SON DEMOSTRATIVOS - MySpace tribute ⚠️</p>
+            </div>
+        </footer>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

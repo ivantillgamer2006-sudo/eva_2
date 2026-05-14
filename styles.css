@@ -1,0 +1,172 @@
+/* ========== NUEVOS ESTILOS PARA EVA 2 ========== */
+
+/* Formulario de agregar productos */
+.form-section {
+    padding: 2rem 5%;
+    background: rgba(0,0,0,0.5);
+    border-top: 1px solid var(--hot-pink);
+    border-bottom: 1px solid var(--hot-pink);
+}
+
+.form-card {
+    max-width: 500px;
+    margin: 0 auto;
+    background: var(--gray-dark);
+    border-radius: 30px;
+    padding: 2rem;
+    border: 2px solid var(--hot-pink);
+}
+
+.error-message {
+    display: block;
+    color: #ff6666;
+    font-size: 0.6rem;
+    margin-top: 5px;
+    font-family: var(--font-8bit);
+    min-height: 20px;
+}
+
+/* Sección del carrito */
+.cart-section {
+    padding: 2rem 5%;
+    background: rgba(0,0,0,0.3);
+}
+
+.cart-container {
+    background: #0a0a0a;
+    border-radius: 25px;
+    padding: 1.5rem;
+    border: 1px solid var(--hot-pink);
+    margin-bottom: 1.5rem;
+}
+
+.cart-item {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 1rem;
+    border-bottom: 1px solid #333;
+    flex-wrap: wrap;
+    gap: 10px;
+}
+
+.cart-item-info {
+    flex-grow: 1;
+}
+
+.cart-item-name {
+    color: var(--hot-pink);
+    font-weight: bold;
+    font-size: 1rem;
+}
+
+.cart-item-price {
+    font-size: 0.8rem;
+    color: #ccc;
+}
+
+.cart-item-quantity {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.cart-item-quantity button {
+    background: var(--hot-pink);
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-weight: bold;
+}
+
+.cart-item-quantity span {
+    min-width: 30px;
+    text-align: center;
+}
+
+.cart-item-subtotal {
+    font-weight: bold;
+    color: var(--hot-pink);
+    min-width: 80px;
+    text-align: right;
+}
+
+.delete-item {
+    background: none;
+    border: none;
+    color: #ff6666;
+    cursor: pointer;
+    font-size: 1.2rem;
+    padding: 5px;
+}
+
+.delete-item:hover {
+    transform: scale(1.1);
+    color: #ff0000;
+}
+
+.cart-empty {
+    text-align: center;
+    padding: 2rem;
+    color: #888;
+    font-family: var(--font-8bit);
+    font-size: 0.7rem;
+}
+
+.cart-total {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1rem;
+    background: #1a1a1a;
+    padding: 1rem 1.5rem;
+    border-radius: 30px;
+    border: 1px solid var(--hot-pink);
+}
+
+.cart-total h3 {
+    color: var(--hot-pink);
+    font-family: var(--font-8bit);
+    font-size: 1.2rem;
+}
+
+.cart-total span {
+    font-size: 1.5rem;
+}
+
+/* Animación para cuando se agrega al carrito */
+@keyframes cartPulse {
+    0% { transform: scale(1); }
+    50% { transform: scale(1.05); background: var(--hot-pink); color: black; }
+    100% { transform: scale(1); }
+}
+
+.cart-pulse {
+    animation: cartPulse 0.3s ease;
+}
+
+/* Badge del carrito flotante */
+.floating-cart-badge {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    background: var(--hot-pink);
+    color: black;
+    border-radius: 50px;
+    padding: 12px 18px;
+    font-family: var(--font-8bit);
+    font-size: 0.8rem;
+    cursor: pointer;
+    z-index: 1000;
+    border: 2px solid white;
+    transition: all 0.2s;
+}
+
+.floating-cart-badge:hover {
+    transform: scale(1.05);
+    background: white;
+    color: black;
+}

@@ -1,0 +1,66 @@
+# Uso de Inteligencia Artificial - EVA 2
+
+## Información General
+- **Asignatura:** Desarrollo de Aplicación Web con JavaScript
+- **Estudiante:** Ivan Orellana
+- **Aplicación:** Tienda de Peluches MySpace Scene
+
+## Prompts utilizados y mejoras aplicadas
+
+### 1. Estructura de datos para carrito
+**Prompt:**
+> "Necesito una estructura de objetos eficiente para un carrito de compras en JavaScript que almacene id, nombre, precio, cantidad, color e imagen. ¿Qué estructura recomiendas?"
+
+**Mejora aplicada:**
+Se implementó un arreglo de objetos con la estructura sugerida, añadiendo validación de unicidad por id+color para evitar duplicados.
+
+### 2. Validaciones avanzadas con expresiones regulares
+**Prompt:**
+> "Genera una expresión regular en JavaScript para validar nombres de productos (solo letras, números, espacios y caracteres especiales como ✖, ♠, ☆). Además, dame validación para precio positivo y cantidad entera."
+
+**Mejora aplicada:**
+Se implementó la regex `^[a-zA-ZáéíóúñÑ0-9\s✖♠☆✰☠♥★]+$` y funciones modulares de validación con mensajes de error claros.
+
+### 3. Prevención de XSS y sanitización
+**Prompt:**
+> "¿Cómo puedo sanitizar texto en JavaScript para evitar ataques XSS al mostrar datos del carrito? Dame ejemplos usando textContent y createElement."
+
+**Mejora aplicada:**
+Se creó la función `escapeHTML()` y `sanitizarTexto()`, y todo el renderizado del carrito usa `createElement` en lugar de `innerHTML` con datos externos.
+
+### 4. Persistencia con localStorage
+**Prompt:**
+> "Necesito guardar el carrito de compras en localStorage y cargarlo al iniciar la página. ¿Cómo implemento eso?"
+
+**Mejora aplicada:**
+Se implementó `localStorage.setItem()` en cada modificación del carrito y `cargarCarritoGuardado()` al inicio.
+
+### 5. Refactorización de funciones
+**Prompt:**
+> "Tengo muchas funciones en mi código. ¿Cómo puedo reorganizarlas para que sean más modulares y reutilizables? Dame sugerencias de separación."
+
+**Mejora aplicada:**
+Se separaron las funciones en: validaciones, manipulación del carrito, renderizado, y utilidades generales. Cada función tiene una única responsabilidad.
+
+### 6. Calcular total dinámico
+**Prompt:**
+> "Dame una función eficiente en JavaScript para calcular el total de un carrito usando reduce."
+
+**Mejora aplicada:**
+Se implementó `calcularTotalCarrito()` usando `reduce()` sobre el arreglo.
+
+## Evidencia de mejoras aplicadas
+
+| Área | Sin IA | Con IA |
+|------|--------|--------|
+| Validación | Básica (solo required) | Regex avanzada + sanitización |
+| Seguridad | innerHTML | createElement + escapeHTML |
+| Estructura | Datos sueltos | Arreglo de objetos con id único |
+| Persistencia | No existía | localStorage completo |
+| Modularidad | Funciones largas | 12+ funciones pequeñas y reutilizables |
+
+## Reflexión final
+El uso de IA permitió agilizar la implementación de validaciones complejas y mejorar la seguridad del código. Se aplicaron todas las sugerencias documentadas, manteniendo la estética MySpace original mientras se cumplían los requisitos técnicos de la evaluación.
+
+--- 
+*Documento elaborado como parte de la EVA 2 - Sumativa*
