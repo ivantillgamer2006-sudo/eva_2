@@ -783,4 +783,43 @@ body {
     .cart-item-subtotal {
         text-align: center;
     }
+/* ========== ESTILOS ADICIONALES PARA FORMULARIO EVA 2 ========== */
+/* Mensaje informativo para campos de ayuda */
+.info-message {
+    display: block;
+    color: #888;
+    font-size: 0.6rem;
+    margin-top: 5px;
+    font-family: var(--font-8bit);
+}
+
+/* Estilo para campos de solo lectura (precio fijo) */
+input:read-only, 
+input:disabled {
+    cursor: not-allowed;
+    background: #2a2a2a !important;
+    color: #ccc !important;
+}
+
+/* Mejora visual para el select del formulario */
+select {
+    background: black;
+    border: 1px solid var(--hot-pink);
+    color: white;
+    padding: 10px;
+    border-radius: 20px;
+    width: 100%;
+    font-family: var(--font-scene);
+    cursor: pointer;
+}
+
+select:focus {
+    outline: 2px solid var(--hot-pink);
+    outline-offset: 2px;
+}
+
+/* Espaciado para el botón de agregar */
+.btn-submit-scene {
+    margin-top: 0.5rem;
+}
 }

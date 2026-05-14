@@ -6,14 +6,12 @@
     <meta name="description" content="☆ PELUCHES CORE ☆ Tu tienda de peluches emo/scene del 2000s. MySpace style, rawr XD">
     <title>☆ PELUCHES CORE ☆ MySpace Scene Plushies</title>
     <link rel="stylesheet" href="styles.css">
-    <!-- Fuente retro 2000s -->
     <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&family=VT323&family=Orbitron:wght@400;700;900&display=swap" rel="stylesheet">
-    <!-- Font Awesome 6 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
 </head>
 <body>
     <div class="myspace-bg">
-        <!-- Header (igual que antes) -->
+        <!-- HEADER -->
         <header class="profile-header">
             <div class="profile-top">
                 <div class="profile-pic-container">
@@ -46,7 +44,7 @@
             </nav>
         </header>
 
-        <!-- Reproductor de música (igual) -->
+        <!-- REPRODUCTOR DE MÚSICA -->
         <div class="myspace-music-player">
             <div class="player-header">
                 <i class="fas fa-headphones"></i> ♪ xX_MyPlaylist_Xx ♪
@@ -73,7 +71,7 @@
             </div>
         </div>
 
-        <!-- Hero section (igual) -->
+        <!-- HERO -->
         <section class="hero-scene">
             <div class="hero-content">
                 <h2 class="blinkie-text">✧ RAWR MEANS I LOVE YOU IN DINOSAUR ✧</h2>
@@ -88,52 +86,53 @@
             </div>
         </section>
 
-        <!-- ========== NUEVA SECCIÓN: FORMULARIO PARA AGREGAR PRODUCTOS ========== -->
+        <!-- ========== FORMULARIO (3 campos: SELECT + CANTIDAD + EMAIL) ========== -->
         <section id="agregar" class="form-section">
             <div class="container">
-                <h2 class="section-title-scene"><i class="fas fa-plus-circle"></i> ★ AGREGAR AL CARRITO ★ <i class="fas fa-plus-circle"></i></h2>
+                <h2 class="section-title-scene"><i class="fas fa-cart-plus"></i> ★ AGREGAR AL CARRITO ★ <i class="fas fa-cart-plus"></i></h2>
                 <div class="form-card">
                     <form id="productoForm">
+                        <!-- Campo 1: SELECT (productos del catálogo) -->
                         <div class="form-group-scene">
-                            <label><i class="fas fa-tag"></i> Nombre del peluche:</label>
-                            <input type="text" id="productoNombre" placeholder="Ej: Oso Emo XD" required>
-                            <small class="error-message" id="errorNombre"></small>
+                            <label><i class="fas fa-tag"></i> 1. Selecciona tu peluche:</label>
+                            <select id="productoSelect" required>
+                                <option value="">-- Elige un peluche --</option>
+                            </select>
+                            <small class="error-message" id="errorProducto"></small>
                         </div>
+                        
+                        <!-- Campo 2: PRECIO (solo lectura, automático) -->
                         <div class="form-group-scene">
-                            <label><i class="fas fa-dollar-sign"></i> Precio (CLP):</label>
-                            <input type="number" id="productoPrecio" placeholder="19990" step="1" required>
-                            <small class="error-message" id="errorPrecio"></small>
+                            <label><i class="fas fa-dollar-sign"></i> Precio unitario (CLP):</label>
+                            <input type="text" id="productoPrecio" readonly disabled style="background:#333; cursor:not-allowed;">
+                            <small class="info-message">* Precio fijo del catálogo</small>
                         </div>
+                        
+                        <!-- Campo 3: CANTIDAD (número entero positivo) -->
                         <div class="form-group-scene">
-                            <label><i class="fas fa-hashtag"></i> Cantidad:</label>
-                            <input type="number" id="productoCantidad" placeholder="1" value="1" min="1" required>
+                            <label><i class="fas fa-hashtag"></i> 2. Cantidad:</label>
+                            <input type="number" id="productoCantidad" placeholder="1" value="1" min="1" step="1" required>
                             <small class="error-message" id="errorCantidad"></small>
                         </div>
+                        
+                        <!-- Campo adicional: EMAIL (para validación con regex) -->
                         <div class="form-group-scene">
-                            <label><i class="fas fa-palette"></i> Color/Variante:</label>
-                            <select id="productoColor">
-                                <option value="negro">🖤 Negro Emo</option>
-                                <option value="rosado">💗 Rosado Glitter</option>
-                                <option value="morado">💜 Morado Gothic</option>
-                                <option value="blanco">🤍 Blanco Scene</option>
-                            </select>
+                            <label><i class="fas fa-envelope"></i> 3. Tu email (para confirmación):</label>
+                            <input type="email" id="clienteEmail" placeholder="emo_kid@hotmail.com" required>
+                            <small class="error-message" id="errorEmail"></small>
                         </div>
+                        
                         <button type="submit" class="btn-submit-scene"><i class="fas fa-cart-plus"></i> AGREGAR AL CARRITO</button>
                     </form>
                 </div>
             </div>
         </section>
 
-        <!-- ========== NUEVA SECCIÓN: CARRITO DE COMPRAS ========== -->
+        <!-- CARRITO -->
         <section id="carrito" class="cart-section">
             <div class="container">
                 <h2 class="section-title-scene"><i class="fas fa-shopping-cart"></i> ★ MI CARRITO EMO ★ <i class="fas fa-shopping-cart"></i></h2>
-                <div id="cartContainer" class="cart-container">
-                    <!-- El carrito se renderiza dinámicamente acá -->
-                    <div class="cart-empty">
-                        <i class="fas fa-heart-broken"></i> El carrito está vacío... agreguemos peluches <i class="fas fa-heart-broken"></i>
-                    </div>
-                </div>
+                <div id="cartContainer" class="cart-container"></div>
                 <div class="cart-total">
                     <h3>TOTAL: <span id="totalCarrito">$0</span></h3>
                     <button id="vaciarCarritoBtn" class="btn-scene" style="background:#c71585;"><i class="fas fa-trash-alt"></i> VACIAR CARRITO</button>
@@ -141,17 +140,15 @@
             </div>
         </section>
 
-        <!-- Sección de productos existente (catálogo) -->
+        <!-- CATÁLOGO DE PRODUCTOS -->
         <section id="productos" class="products-scene">
             <div class="container">
                 <h2 class="section-title-scene"><i class="fas fa-star"></i> ★ MIS PLUSHIES ★ <i class="fas fa-star"></i></h2>
-                <div class="products-grid-scene" id="catalogoProductos">
-                    <!-- Los productos del catálogo se generan desde JS para mantener consistencia -->
-                </div>
+                <div class="products-grid-scene" id="catalogoProductos"></div>
             </div>
         </section>
 
-        <!-- Contacto (igual) -->
+        <!-- CONTACTO -->
         <section id="contacto" class="contact-scene">
             <div class="container">
                 <h2 class="section-title-scene"><i class="fas fa-envelope"></i> ✉ DÉJAME UN MENSAJE ✉ <i class="fas fa-envelope"></i></h2>
@@ -199,6 +196,11 @@
             </div>
         </footer>
     </div>
+    
+    <div class="activate-music-btn" onclick="activarMusica()">
+        <i class="fas fa-headphones"></i> ♪ CLICK PARA ACTIVAR MÚSICA ♪
+    </div>
+    
     <script src="script.js"></script>
 </body>
 </html>

@@ -12,32 +12,33 @@ let catalogo = [
 
 let carrito = []; // Array de objetos { id, nombre, precio, cantidad, color, imagen }
 
-// ========== FUNCIONES MODULARES ==========
-
+// ========== FUNCIONES DE SEGURIDAD (IA asistida) ==========
 // [IA asistida] Función para sanitizar texto (evitar XSS)
 function sanitizarTexto(texto) {
     return texto.replace(/[<>]/g, '').trim();
 }
 
-// Validaciones del formulario
-function validarNombre(nombre) {
-    const nombreLimpio = sanitizarTexto(nombre);
-    if (nombreLimpio.length === 0) return { valido: false, error: "El nombre no puede estar vacío" };
-    if (nombreLimpio.length < 3) return { valido: false, error: "El nombre debe tener al menos 3 caracteres" };
-    // Solo letras, números, espacios y caracteres emo permitidos
-    const regex = /^[a-zA-ZáéíóúñÑ0-9\s✖♠☆✰☠♥★]+$/;
-    if (!regex.test(nombreLimpio)) return { valido: false, error: "Caracteres no válidos en el nombre" };
-    return { valido: true, error: null, valor: nombreLimpio };
+// [IA asistida] Función para escapar HTML (seguridad)
+function escapeHTML(str) {
+    return str.replace(/[&<>]/g, function(m) {
+        if (m === '&') return '&amp;';
+        if (m === '<') return '&lt;';
+        if (m === '>') return '&gt;';
+        return m;
+    });
 }
 
-function validarPrecio(precio) {
-    const precioNum = Number(precio);
-    if (isNaN(precioNum)) return { valido: false, error: "El precio debe ser un número" };
-    if (precioNum <= 0) return { valido: false, error: "El precio debe ser mayor a 0" };
-    if (precioNum > 999999) return { valido: false, error: "Precio muy alto (máx $999.999)" };
-    return { valido: true, error: null, valor: precioNum };
+// ========== VALIDACIONES AVANZADAS (IA asistida - regex) ==========
+// [IA asistida] Validación de email con regex
+function validarEmail(email) {
+    const emailLimpio = sanitizarTexto(email);
+    if (emailLimpio.length === 0) return { valido: false, error: "El email no puede estar vacío" };
+    const regex = /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/;
+    if (!regex.test(emailLimpio)) return { valido: false, error: "Email no válido (ej: nombre@dominio.com)" };
+    return { valido: true, error: null, valor: emailLimpio };
 }
 
+// [IA asistida] Validación de cantidad (entera y positiva)
 function validarCantidad(cantidad) {
     const cantidadNum = Number(cantidad);
     if (isNaN(cantidadNum)) return { valido: false, error: "La cantidad debe ser un número" };
@@ -47,21 +48,52 @@ function validarCantidad(cantidad) {
     return { valido: true, error: null, valor: cantidadNum };
 }
 
-// [IA asistida] Función para agregar item al carrito
-function agregarAlCarrito(id, nombre, precio, cantidad, color, imagen) {
+// [IA asistida] Validación de precio (positivo)
+function validarPrecio(precio) {
+    const precioNum = Number(precio);
+    if (isNaN(precioNum)) return { valido: false, error: "El precio debe ser un número" };
+    if (precioNum <= 0) return { valido: false, error: "El precio debe ser mayor a 0" };
+    if (precioNum > 999999) return { valido: false, error: "Precio muy alto (máx $999.999)" };
+    return { valido: true, error: null, valor: precioNum };
+}
+
+// ========== FUNCIONES DEL CARRITO (modulares y reutilizables) ==========
+// [IA asistida] Agregar item al carrito con validaciones
+function agregarAlCarrito(id, nombre, precio, cantidad, color, imagen, email) {
+    // Validar precio por seguridad
+    const precioValid = validarPrecio(precio);
+    if (!precioValid.valido) {
+        alert(`❌ Error: ${precioValid.error}`);
+        return false;
+    }
+    
+    // Validar cantidad por seguridad
+    const cantidadValid = validarCantidad(cantidad);
+    if (!cantidadValid.valido) {
+        alert(`❌ Error: ${cantidadValid.error}`);
+        return false;
+    }
+    
+    // Validar email (opcional para esta función)
+    if (email) {
+        const emailValid = validarEmail(email);
+        if (!emailValid.valido) {
+            alert(`❌ Error: ${emailValid.error}`);
+            return false;
+        }
+    }
+    
     // Buscar si ya existe producto con mismo id y color
     const existeIndex = carrito.findIndex(item => item.id === id && item.color === color);
     
     if (existeIndex !== -1) {
-        // Actualizar cantidad
-        carrito[existeIndex].cantidad += cantidad;
+        carrito[existeIndex].cantidad += cantidadValid.valor;
     } else {
-        // Agregar nuevo item
         carrito.push({
             id: id,
             nombre: sanitizarTexto(nombre),
-            precio: precio,
-            cantidad: cantidad,
+            precio: precioValid.valor,
+            cantidad: cantidadValid.valor,
             color: color,
             imagen: imagen
         });
@@ -80,9 +112,11 @@ function agregarAlCarrito(id, nombre, precio, cantidad, color, imagen) {
     setTimeout(() => {
         if (cartDisplay) cartDisplay.classList.remove('cart-pulse');
     }, 300);
+    
+    return true;
 }
 
-// Función para eliminar item del carrito
+// Eliminar item del carrito
 function eliminarDelCarrito(index) {
     carrito.splice(index, 1);
     localStorage.setItem('carritoPeluches', JSON.stringify(carrito));
@@ -90,7 +124,7 @@ function eliminarDelCarrito(index) {
     actualizarContadorCarrito();
 }
 
-// Función para actualizar cantidad de un item
+// Actualizar cantidad de un item
 function actualizarCantidadItem(index, nuevaCantidad) {
     if (nuevaCantidad < 1) {
         eliminarDelCarrito(index);
@@ -103,12 +137,23 @@ function actualizarCantidadItem(index, nuevaCantidad) {
     actualizarContadorCarrito();
 }
 
-// Función para calcular el total del carrito
+// Calcular total del carrito (usando reduce)
 function calcularTotalCarrito() {
     return carrito.reduce((total, item) => total + (item.precio * item.cantidad), 0);
 }
 
-// [IA asistida] Función para renderizar el carrito en el DOM (usa createElement, seguridad)
+// Vaciar carrito completo
+function vaciarCarrito() {
+    if (confirm('¿RAWR! ¿Seguro que quieres vaciar todo tu carrito?')) {
+        carrito = [];
+        localStorage.setItem('carritoPeluches', JSON.stringify(carrito));
+        renderizarCarrito();
+        actualizarContadorCarrito();
+    }
+}
+
+// ========== FUNCIONES DE RENDERIZADO (DOM manipulation) ==========
+// [IA asistida] Renderizar carrito (usa createElement, seguro contra XSS)
 function renderizarCarrito() {
     const cartContainer = document.getElementById('cartContainer');
     if (!cartContainer) return;
@@ -123,14 +168,11 @@ function renderizarCarrito() {
         return;
     }
     
-    // Limpiar contenedor
     cartContainer.innerHTML = '';
     
-    // Renderizar cada item usando createElement (seguro contra XSS)
     carrito.forEach((item, index) => {
         const itemDiv = document.createElement('div');
         itemDiv.className = 'cart-item';
-        
         const subtotal = item.precio * item.cantidad;
         
         itemDiv.innerHTML = `
@@ -146,26 +188,14 @@ function renderizarCarrito() {
             <div class="cart-item-subtotal">$${subtotal.toLocaleString()}</div>
             <button class="delete-item" onclick="eliminarDelCarrito(${index})"><i class="fas fa-trash-alt"></i></button>
         `;
-        
         cartContainer.appendChild(itemDiv);
     });
     
-    // Actualizar total
     const total = calcularTotalCarrito();
     document.getElementById('totalCarrito').textContent = `$${total.toLocaleString()}`;
 }
 
-// Función auxiliar para escapar HTML (seguridad)
-function escapeHTML(str) {
-    return str.replace(/[&<>]/g, function(m) {
-        if (m === '&') return '&amp;';
-        if (m === '<') return '&lt;';
-        if (m === '>') return '&gt;';
-        return m;
-    });
-}
-
-// Actualizar el contador flotante del carrito
+// Actualizar contador flotante del carrito
 function actualizarContadorCarrito() {
     const totalItems = carrito.reduce((sum, item) => sum + item.cantidad, 0);
     const cartCounter = document.getElementById('scene-cart-counter');
@@ -174,17 +204,7 @@ function actualizarContadorCarrito() {
     }
 }
 
-// Vaciar carrito completo
-function vaciarCarrito() {
-    if (confirm('¿RAWR! ¿Seguro que quieres vaciar todo tu carrito?')) {
-        carrito = [];
-        localStorage.setItem('carritoPeluches', JSON.stringify(carrito));
-        renderizarCarrito();
-        actualizarContadorCarrito();
-    }
-}
-
-// Renderizar el catálogo de productos
+// Renderizar catálogo de productos
 function renderizarCatalogo() {
     const catalogoContainer = document.getElementById('catalogoProductos');
     if (!catalogoContainer) return;
@@ -209,13 +229,13 @@ function renderizarCatalogo() {
         catalogoContainer.appendChild(card);
     });
     
-    // Agregar event listeners a los botones del catálogo
     document.querySelectorAll('.btn-buy-scene').forEach(btn => {
         btn.removeEventListener('click', handleCatalogoClick);
         btn.addEventListener('click', handleCatalogoClick);
     });
 }
 
+// Manejar clic en botón de compra del catálogo
 function handleCatalogoClick(e) {
     const btn = e.currentTarget;
     const id = parseInt(btn.getAttribute('data-id'));
@@ -225,7 +245,6 @@ function handleCatalogoClick(e) {
     
     agregarAlCarrito(id, nombre, precio, 1, 'negro', imagen);
     
-    // Alerta estilo MySpace
     const notif = document.createElement('div');
     notif.className = 'myspace-notification';
     notif.innerHTML = `🖤 ¡${nombre} agregado al carrito! 🖤`;
@@ -243,47 +262,86 @@ function handleCatalogoClick(e) {
     setTimeout(() => notif.remove(), 2000);
 }
 
+// ========== CARGAR PRODUCTOS EN EL SELECT ==========
+function cargarProductosEnSelect() {
+    const select = document.getElementById('productoSelect');
+    if (!select) return;
+    
+    while (select.options.length > 1) {
+        select.remove(1);
+    }
+    
+    catalogo.forEach(producto => {
+        const option = document.createElement('option');
+        option.value = producto.id;
+        option.textContent = `${producto.nombre} - $${producto.precio.toLocaleString()}`;
+        option.setAttribute('data-precio', producto.precio);
+        option.setAttribute('data-nombre', producto.nombre);
+        option.setAttribute('data-imagen', producto.imagen);
+        select.appendChild(option);
+    });
+    
+    select.addEventListener('change', (e) => {
+        const selectedOption = select.options[select.selectedIndex];
+        const precio = selectedOption.getAttribute('data-precio');
+        const precioInput = document.getElementById('productoPrecio');
+        
+        if (precio && select.selectedIndex > 0) {
+            precioInput.value = `$${parseInt(precio).toLocaleString()}`;
+        } else {
+            precioInput.value = '';
+        }
+        document.getElementById('errorProducto').textContent = '';
+    });
+}
+
 // ========== CONFIGURACIÓN DEL FORMULARIO ==========
 function setupFormulario() {
     const form = document.getElementById('productoForm');
     if (!form) return;
     
+    cargarProductosEnSelect();
+    
     form.addEventListener('submit', (e) => {
         e.preventDefault();
         
-        // Obtener valores
-        const nombreRaw = document.getElementById('productoNombre').value;
-        const precioRaw = document.getElementById('productoPrecio').value;
+        const select = document.getElementById('productoSelect');
+        const selectedIndex = select.selectedIndex;
         const cantidadRaw = document.getElementById('productoCantidad').value;
-        const color = document.getElementById('productoColor').value;
+        const email = document.getElementById('clienteEmail').value;
         
-        // Validaciones
-        const nombreValid = validarNombre(nombreRaw);
-        const precioValid = validarPrecio(precioRaw);
-        const cantidadValid = validarCantidad(cantidadRaw);
-        
-        // Mostrar errores
-        document.getElementById('errorNombre').textContent = nombreValid.error || '';
-        document.getElementById('errorPrecio').textContent = precioValid.error || '';
-        document.getElementById('errorCantidad').textContent = cantidadValid.error || '';
-        
-        if (!nombreValid.valido || !precioValid.valido || !cantidadValid.valido) {
+        // Validar producto seleccionado
+        if (selectedIndex === 0 || !select.value) {
+            document.getElementById('errorProducto').textContent = 'Por favor, selecciona un peluche del catálogo';
             return;
+        } else {
+            document.getElementById('errorProducto').textContent = '';
         }
         
-        // Crear nuevo producto (id temporal)
-        const nuevoId = Date.now();
-        const nuevaImagen = "https://placekitten.com/400/400"; // Imagen por defecto
+        // Validar email
+        const emailValid = validarEmail(email);
+        document.getElementById('errorEmail').textContent = emailValid.error || '';
+        if (!emailValid.valido) return;
         
-        // Agregar al carrito directamente
-        agregarAlCarrito(nuevoId, nombreValid.valor, precioValid.valor, cantidadValid.valor, color, nuevaImagen);
+        // Validar cantidad
+        const cantidadValid = validarCantidad(cantidadRaw);
+        document.getElementById('errorCantidad').textContent = cantidadValid.error || '';
+        if (!cantidadValid.valido) return;
         
-        // Limpiar formulario
-        form.reset();
+        const selectedOption = select.options[selectedIndex];
+        const productoId = parseInt(select.value);
+        const productoNombre = selectedOption.getAttribute('data-nombre');
+        const productoPrecio = parseInt(selectedOption.getAttribute('data-precio'));
+        const productoImagen = selectedOption.getAttribute('data-imagen');
+        
+        agregarAlCarrito(productoId, productoNombre, productoPrecio, cantidadValid.valor, 'negro', productoImagen, emailValid.valor);
+        
+        select.selectedIndex = 0;
         document.getElementById('productoCantidad').value = 1;
+        document.getElementById('productoPrecio').value = '';
+        document.getElementById('clienteEmail').value = '';
         
-        // Mostrar notificación de éxito
-        alert(`🖤 ¡${nombreValid.valor} agregado al carrito! 🖤\nPrecio: $${precioValid.valor.toLocaleString()}\nCantidad: ${cantidadValid.valor}`);
+        alert(`🖤 ¡${productoNombre} agregado al carrito! 🖤\nPrecio: $${productoPrecio.toLocaleString()}\nCantidad: ${cantidadValid.valor}\nEmail de confirmación: ${emailValid.valor}`);
     });
 }
 
@@ -303,7 +361,6 @@ function cargarCarritoGuardado() {
 
 // ========== INICIALIZACIÓN ==========
 document.addEventListener('DOMContentLoaded', () => {
-    // Configurar carrito flotante
     const cartDisplay = document.createElement('div');
     cartDisplay.id = 'scene-cart-counter';
     cartDisplay.className = 'floating-cart-badge';
@@ -313,18 +370,15 @@ document.addEventListener('DOMContentLoaded', () => {
     };
     document.body.appendChild(cartDisplay);
     
-    // Inicializar todo
     renderizarCatalogo();
     setupFormulario();
     cargarCarritoGuardado();
     
-    // Botón vaciar carrito
     const vaciarBtn = document.getElementById('vaciarCarritoBtn');
     if (vaciarBtn) {
         vaciarBtn.addEventListener('click', vaciarCarrito);
     }
     
-    // Configurar reproductor de audio
     let audioPlayer = document.getElementById('sceneAudio');
     if (audioPlayer) {
         audioPlayer.volume = 0.5;
@@ -342,7 +396,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     }
     
-    // Contact form demo
     const contactForm = document.querySelector('.contact-form-scene');
     if (contactForm) {
         contactForm.addEventListener('submit', (e) => {
