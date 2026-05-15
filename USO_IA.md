@@ -7,7 +7,7 @@
 
 ## Prompts utilizados
 
-> Cabe mencionar que usé el mismo chat que usé para la eva1 para tener una mejor continuación y para que no me cambiara el nombre de koa archivos que ya tenia 
+- Cabe mencionar que usé el mismo chat que usé para la eva1 para tener una mejor continuación y para que no me cambiara el nombre de koa archivos que ya tenia
 
 ### 1. Estructura de datos para carrito
 **Prompt:**
