@@ -3,9 +3,11 @@
 ## Información General
 - **Asignatura:** Desarrollo de Aplicación Web con JavaScript
 - **Estudiante:** Ivan Orellana
-- **Aplicación:** Tienda de Peluches MySpace Scene
+- **Aplicación:** Tienda de Peluches MySpace Scene (continuación de Eva1)
 
-## Prompts utilizados y mejoras aplicadas
+## Prompts utilizados
+
+> Cabe mencionar que usé el mismo chat que usé para la eva1 para tener una mejor continuación y para que no me cambiara el nombre de koa archivos que ya tenia 
 
 ### 1. Estructura de datos para carrito
 **Prompt:**
@@ -49,18 +51,6 @@ Se separaron las funciones en: validaciones, manipulación del carrito, renderiz
 **Mejora aplicada:**
 Se implementó `calcularTotalCarrito()` usando `reduce()` sobre el arreglo.
 
-## Evidencia de mejoras aplicadas
-
-| Área | Sin IA | Con IA |
-|------|--------|--------|
-| Validación | Básica (solo required) | Regex avanzada + sanitización |
-| Seguridad | innerHTML | createElement + escapeHTML |
-| Estructura | Datos sueltos | Arreglo de objetos con id único |
-| Persistencia | No existía | localStorage completo |
-| Modularidad | Funciones largas | 12+ funciones pequeñas y reutilizables |
-
-## Reflexión final
-El uso de IA permitió agilizar la implementación de validaciones complejas y mejorar la seguridad del código. Se aplicaron todas las sugerencias documentadas, manteniendo la estética MySpace original mientras se cumplían los requisitos técnicos de la evaluación.
 
 --- 
 *Documento elaborado como parte de la EVA 2 - Sumativa*
